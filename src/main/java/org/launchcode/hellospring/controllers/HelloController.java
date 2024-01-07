@@ -22,8 +22,24 @@ public class HelloController {
 
     //dynamic responses /hello?name=LaunchCode (Query Parameter)
     @RequestMapping(method= {RequestMethod.GET, RequestMethod.POST}, value= "hello")
-    public String helloWithQueryParam(@RequestParam String name){
-        return "Hello, " + name + "!";
+    public String helloWithQueryParam(@RequestParam String name, @RequestParam String language){
+        return languageSelector(language) + name + "!";
+
+    }
+
+
+    public String languageSelector(String language){
+        if (language.equals("english")){
+            return "Hello, ";
+        } else if (language.equals("spanish")){
+            return "Hola, ";
+        } else if (language.equals("french")){
+            return "Bonjour, ";
+        } else if (language.equals("german")){
+            return "Hallo, ";
+        }else {
+            return "Witam, ";
+        }
 
     }
 
@@ -40,6 +56,13 @@ public class HelloController {
                 "<body>" +
                 "<form action= 'hello' method= 'post'>" + //submit request to /hello
                 "<input type= 'text' name= 'name'>" +
+                "<select name= 'language'>" +
+                "<option value=''>* Select One *</option>" +
+                "<option value='english'>English</option>" +
+                "<option value='spanish'>Spanish</option>" +
+                "<option value='french'>French</option>" +
+                "<option value='german'>German</option>" +
+                "<option value='polish'>Polish</option>" +
                 "<input type= 'submit' value= 'Greet Me!'>" +
                 "</form>" +
                 "</body>" +
