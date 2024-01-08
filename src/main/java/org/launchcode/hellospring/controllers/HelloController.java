@@ -13,6 +13,10 @@ public class HelloController {
 //        return "Hello, Spring!";
 //
 //    }
+    @GetMapping("")
+    public String displayHomePage(){
+        return "<a href= '/form'> Page Redirect <a/> or <a href= '/form2'> No Page Redirect <a/>";
+    }
 
     @GetMapping("goodbye")
     public String goodBye(){
@@ -23,7 +27,7 @@ public class HelloController {
     //dynamic responses /hello?name=LaunchCode (Query Parameter)
     @RequestMapping(method= {RequestMethod.GET, RequestMethod.POST}, value= "hello")
     public String helloWithQueryParam(@RequestParam String name, @RequestParam String language){
-        return languageSelector(language) + name + "!";
+        return languageSelector(language) + name + "!" + "<a href= '/'> Home <a/>";
 
     }
 
@@ -54,7 +58,7 @@ public class HelloController {
     public String helloForm(){
         return"<html>" +
                 "<body>" +
-                "<form action= 'hello' method= 'post'>" + //submit request to /hello
+                "<form action='/hello' method= 'post'>" + //submit request to /hello
                 "<input type= 'text' name= 'name'>" +
                 "<select name= 'language'>" +
                 "<option value=''>* Select One *</option>" +
@@ -68,5 +72,38 @@ public class HelloController {
                 "</body>" +
                 "</html>";
     }
+
+
+
+
+    // DOES NOT REDIRECT TO NEW PAGE:
+
+    @GetMapping("/form2")
+    public String helloForm2(){
+        return"<html>" +
+                "<body>" +
+                "<form method= 'post'>" + //submit request to /hello
+                "<input type= 'text' name= 'name'>" +
+                "<select name= 'language'>" +
+                "<option value=''>* Select One *</option>" +
+                "<option value='english'>English</option>" +
+                "<option value='spanish'>Spanish</option>" +
+                "<option value='french'>French</option>" +
+                "<option value='german'>German</option>" +
+                "<option value='polish'>Polish</option>" +
+                "<input type= 'submit' value= 'Greet Me!'>" +
+                "</form>" +
+                "</body>" +
+                "</html>";
+    }
+
+    @PostMapping("/form2")
+    public String helloWithQueryParam2(@RequestParam String name, @RequestParam String language){
+        return languageSelector(language) + name + "!" + "<a href= '/'> Home <a/>";
+
+    }
+
+
+
 
 }
